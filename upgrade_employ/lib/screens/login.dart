@@ -137,6 +137,15 @@ class _LoginState extends State<Login> {
                         style: TextStyle(color: Colors.red),
                       )
                     : const SizedBox(),*/
+                  Divider(color: Colors.grey, height: 1,),
+                  
+                  SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: (){
+                      //Handle signal tap
+                    },
+                    child: Text('No account? Signal', style: TextStyle(color: Colors.blue),),
+                  ),
               ],
             ),
           ),
