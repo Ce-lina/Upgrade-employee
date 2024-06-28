@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:upgrade_employ/component/buttom_widget/buttom_widget.dart';
 import 'package:upgrade_employ/component/constante.dart';
+import 'package:upgrade_employ/component/form_widget/form_widget.dart';
+import 'package:flashtoast/flash_toast.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -10,144 +14,93 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-//We need two text editing controller
-
-//TextEditing controller to control the text when we enter it
-  final Email = TextEditingController();
-  final password = TextEditingController();
-
-  //A bool variable for show and hide password
-  bool isVisible = true;
-
-  //We have to create global key for our form
-  final formKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  bool ispass = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              key: formKey,
-              children: [
-                //Email field
-                //Before we show the image, after we copied the image we need to define the location in pubspec.yaml
-                Image.asset(
-                  '${Constante.imagePath}login.png',
-                  width: 200,
+          padding: EdgeInsets.only(right: 15.0, left: 15.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Image.asset(
+                '${Constante.imagePath}login.png',
+                height: 300,
+              ),
+              FormWidget(
+                controller: emailController,
+                placeholder: "Email",
+                prefixicon:
+                    IconButton(onPressed: null, icon: Icon(Icons.email)),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              FormWidget(
+                controller: passwordController,
+                placeholder: "password",
+                isPassword: ispass,
+                prefixicon: IconButton(onPressed: null, icon: Icon(Icons.lock)),
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      ispass = !ispass;
+                    });
+                  },
+                  icon: ispass
+                      ? Icon(Icons.visibility)
+                      : Icon(Icons.visibility_off),
                 ),
-                const SizedBox(height: 15),
-
-                Text(
-                  'Log in',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-
-                Container(
-                  margin: EdgeInsets.all(8),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.blue.withOpacity(.2)),
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Email is required";
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.email),
-                      border: InputBorder.none,
-                      hintText: "Email",
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              ButtonWidget(
+                text: "Connexion",
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Divider(
+                      color: Colors.grey,
                     ),
                   ),
-                ),
-
-                //Password field
-                Container(
-                  margin: const EdgeInsets.all(8),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.blue.withOpacity(.2)),
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "password is required";
-                      }
-                      return null;
-                    },
-                    obscureText: isVisible,
-                    decoration: InputDecoration(
-                        icon: Icon(Icons.lock),
-                        border: InputBorder.none,
-                        hintText: "Password",
-                        suffixIcon: IconButton(
-                            onPressed: () {
-                              //In here we will create a click tio show and hide the password a toggle button
-                              setState(() {
-                                //toggle button
-                                isVisible = !isVisible;
-                              });
-                            },
-                            icon: Icon(isVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off))),
+                  Text(" Ou "),
+                  Expanded(
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              TextButton(
+                onPressed: () {
+                  FlashToast.showFlashToast(
+                      context: context,
+                      title: "Autorisation",
+                      message: "veillez rencontrer votre RH pour avoir un compte.",
+                      duration: 4,
+                      flashType: FlashType.help,);
+                },
+                child: Center(
+                  child: Text(
+                    "Je n'ai pas de compte",
+                    style: GoogleFonts.inter(color: Colors.blue),
                   ),
                 ),
-                const SizedBox(height: 10),
-
-                //Login button
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  width: MediaQuery.of(context).size.width * .9,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.blue,
-                  ),
-                  child: TextButton(
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          //Login method willw bw here
-                        }
-                      },
-                      child: const Text(
-                        "LOGIN",
-                        style: TextStyle(color: Colors.white),
-                      )),
-                ),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text('Log in with'),
-                  IconButton(
-                    icon: Icon(Icons.facebook),
-                    onPressed: () {},
-                  ),
-                  /*IconButton(icon: Icon(Icons.google),
-                    onPressed: (){},),
-                    IconButton(icon: Icon(Icons.github),
-                    onPressed: (){},),*/
-                ]),
-                /*isLoginTrue
-                    ? const Text(
-                        "Username or passowrd is incorrect",
-                        style: TextStyle(color: Colors.red),
-                      )
-                    : const SizedBox(),*/
-                  Divider(color: Colors.grey, height: 1,),
-                  
-                  SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: (){
-                      //Handle signal tap
-                    },
-                    child: Text('No account? Signal', style: TextStyle(color: Colors.blue),),
-                  ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
