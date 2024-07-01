@@ -5,6 +5,7 @@ import 'package:upgrade_employ/component/buttom_widget/buttom_widget.dart';
 import 'package:upgrade_employ/component/constante.dart';
 import 'package:upgrade_employ/component/form_widget/form_widget.dart';
 import 'package:flashtoast/flash_toast.dart';
+import 'package:upgrade_employ/controller/authentification_controller.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -14,6 +15,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  AuthentificationController controller = AuthentificationController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool ispass = true;
@@ -61,6 +63,9 @@ class _LoginState extends State<Login> {
               ),
               ButtonWidget(
                 text: "Connexion",
+                onPressed: () {
+                  controller.loginUserPost("celina@gmail.com", "cel1234");
+                },
               ),
               SizedBox(
                 height: 20,
