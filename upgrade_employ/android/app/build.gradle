@@ -25,7 +25,9 @@ if (flutterVersionName == null) {
 
 android {
     namespace = "com.example.upgrade_employ"
-    compileSdk = flutter.compileSdkVersion
+    // compileSdk = flutter.compileSdkVersion
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
